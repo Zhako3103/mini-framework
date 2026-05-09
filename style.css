@@ -179,10 +179,12 @@ body::after {
   background: rgba(51, 255, 51, 0.03);
 }
 
-.main {
-  position: relative;
+.toggle-all-wrapper {
   background: var(--surface);
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  position: relative;
 }
 
 .toggle-all {
@@ -191,30 +193,37 @@ body::after {
   opacity: 0;
 }
 
-.toggle-all + label {
-  position: absolute;
-  top: -51px;
-  left: 0;
-  width: 48px;
-  height: 51px;
+.toggle-all-wrapper .toggle-all + label {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   cursor: pointer;
-  z-index: 2;
+  width: 250px;
+  height: 51px;
+  padding: 0;
+  margin: 0;
 }
 
-.toggle-all + label::before {
+.toggle-all-wrapper .toggle-all + label::before {
   content: '▾';
   font-size: 18px;
   color: var(--text-dim);
   transition: color 0.2s, text-shadow 0.2s;
   font-family: var(--mono);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.toggle-all:checked + label::before {
+.toggle-all-wrapper .toggle-all:checked + label::before {
   color: var(--green);
   text-shadow: 0 0 8px var(--green-glow);
+}
+
+.main {
+  background: var(--surface);
 }
 
 .todo-list {

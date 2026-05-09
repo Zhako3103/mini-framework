@@ -62,9 +62,18 @@ function Main(state) {
     if (state.filter === 'completed') return t.completed;
     return true;
   });
-  const allDone = state.todos.length > 0 && state.todos.every((t) => t.completed);
 
   return h('section', { className: 'main', id: 'main' },
+    h('ul', { className: 'todo-list', id: 'todo-list' },
+      ...visible.map((t) => TodoItem(t, state))
+    )
+  );
+}
+
+function ToggleAll(state) {
+  const allDone = state.todos.length > 0 && state.todos.every((t) => t.completed);
+
+  return h('div', { className: 'toggle-all-wrapper' },
     h('input', {
       className: 'toggle-all',
       id: 'toggle-all',
@@ -72,10 +81,7 @@ function Main(state) {
       checked: allDone,
       onChange: () => dispatch('TOGGLE_ALL'),
     }),
-    h('label', { htmlFor: 'toggle-all' }, 'Mark all as complete'),
-    h('ul', { className: 'todo-list', id: 'todo-list' },
-      ...visible.map((t) => TodoItem(t, state))
-    )
+    h('label', { htmlFor: 'toggle-all' }, 'Mark all as complete')
   );
 }
 
@@ -113,7 +119,9 @@ function App(state) {
   const has = state.todos.length > 0;
   return h('section', { className: 'todoapp' },
     Header(state),
+    has ? ToggleAll(state) : null,
     has ? Main(state) : null,
+    
     has ? Footer(state) : null
   );
 }
